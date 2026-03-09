@@ -1,0 +1,67 @@
+package com.inventory.management.service;
+
+import com.inventory.management.entity.Product;
+import com.inventory.management.exception.ResourceNotFoundException;
+import com.inventory.management.repository.ProductRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ProductServiceImpl implements ProductService {
+
+    private final ProductRepository repository;
+    private final EmailService emailService;
+
+    public ProductServiceImpl(ProductRepository repository, EmailService emailService) {
+        this.repository = repository;
+        this.emailService = emailService;
+    }
+
+    @Override
+    public Product createProduct(Product product) {
+        Product saved = repository.save(product);
+        checkAndSendLowStockAlert(saved);
+        return saved;
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Product getProductById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
+    }
+
+    @Override
+    public Product updateProduct(Long id, Product product) {
+
+        Product existing = getProductById(id);
+
+        existing.setName(product.getName());
+        existing.setQuantity(product.getQuantity());
+        existing.setPrice(product.getPrice());
+        existing.setCategory(product.getCategory());
+        existing.setSupplier(product.getSupplier());
+
+        Product updated = repository.save(existing);
+        checkAndSendLowStockAlert(updated);
+        return updated;
+    }
+
+    private void checkAndSendLowStockAlert(Product product) {
+        if (product.getQuantity() < 5) {
+            // Using a placeholder recipient email. In a real app, this could be from config
+            // or user profile.
+            emailService.sendLowStockAlert(product.getName(), product.getQuantity(), "admin@example.com");
+        }
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+        repository.delete(getProductById(id));
+    }
+}
