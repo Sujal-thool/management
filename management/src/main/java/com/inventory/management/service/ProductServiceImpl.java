@@ -21,6 +21,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product createProduct(Product product) {
         Product saved = repository.save(product);
+        
+        // Send notification for new product addition
+        emailService.sendProductAddedNotification(saved, "admin@example.com");
+        
         checkAndSendLowStockAlert(saved);
         return saved;
     }
@@ -50,6 +54,24 @@ public class ProductServiceImpl implements ProductService {
         Product updated = repository.save(existing);
         checkAndSendLowStockAlert(updated);
         return updated;
+    }
+
+    @Override
+    public byte[] exportProductsToCSV() {
+        List<Product> products = repository.findAll();
+        StringBuilder csvContent = new StringBuilder();
+        csvContent.append("ID,Name,Quantity,Price,Category,Supplier\n");
+
+        for (Product product : products) {
+            csvContent.append(product.getId()).append(",")
+                    .append(product.getName()).append(",")
+                    .append(product.getQuantity()).append(",")
+                    .append(product.getPrice()).append(",")
+                    .append(product.getCategory()).append(",")
+                    .append(product.getSupplier()).append("\n");
+        }
+
+        return csvContent.toString().getBytes();
     }
 
     private void checkAndSendLowStockAlert(Product product) {
