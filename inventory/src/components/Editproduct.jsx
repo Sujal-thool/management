@@ -80,7 +80,7 @@ const EditProduct = () => {
                         </div>
 
                         <div className="form-group">
-                            <label>Price ($)</label>
+                            <label>Price (Rs)</label>
                             <input
                                 type="number"
                                 step="0.01"
