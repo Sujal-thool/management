@@ -3,6 +3,8 @@ package com.inventory.management.service;
 import com.inventory.management.entity.Product;
 import com.inventory.management.exception.ResourceNotFoundException;
 import com.inventory.management.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +34,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAllProducts() {
         return repository.findAll();
+    }
+
+    @Override
+    public Page<Product> getAllProducts(String name, String category, Pageable pageable) {
+        if (name != null && !name.isEmpty() && category != null && !category.isEmpty()) {
+            return repository.findByNameContainingIgnoreCaseAndCategoryIgnoreCase(name, category, pageable);
+        } else if (name != null && !name.isEmpty()) {
+            return repository.findByNameContainingIgnoreCase(name, pageable);
+        } else if (category != null && !category.isEmpty()) {
+            return repository.findByCategoryIgnoreCase(category, pageable);
+        } else {
+            return repository.findAll(pageable);
+        }
     }
 
     @Override

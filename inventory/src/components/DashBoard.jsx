@@ -18,8 +18,9 @@ const Dashboard = () => {
     const fetchProducts = async () => {
         try {
             const response = await api.get('/products');
-            setProducts(response.data);
-            const lowStockItems = response.data.filter(p => p.quantity < 30);
+            const data = response.data.content ? response.data.content : response.data;
+            setProducts(data);
+            const lowStockItems = data.filter(p => p.quantity < 30);
             if (lowStockItems.length > 0) {
                 setAlertOpen(true);
             }

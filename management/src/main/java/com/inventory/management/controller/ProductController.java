@@ -4,9 +4,9 @@ import com.inventory.management.entity.Product;
 import com.inventory.management.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import jakarta.validation.Valid;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -24,8 +24,11 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAll() {
-        return service.getAllProducts();
+    public ResponseEntity<Page<Product>> getAll(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category,
+            Pageable pageable) {
+        return ResponseEntity.ok(service.getAllProducts(name, category, pageable));
     }
 
     @GetMapping("/{id}")
