@@ -6,6 +6,7 @@ import AddProduct from './components/AddProduct';
 import EditProduct from './components/EditProduct';
 import Login from './components/Login';
 import Register from './components/Register';
+import Chatbot from './components/Chatbot';
 import { getUserRole } from './services/api';
 import './App.css';
 
@@ -57,6 +58,7 @@ const App = () => {
                     />
                   </Routes>
                 </main>
+                <Chatbot />
               </div>
             </PrivateRoute>
           }

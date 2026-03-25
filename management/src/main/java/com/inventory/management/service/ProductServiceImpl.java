@@ -90,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void checkAndSendLowStockAlert(Product product) {
-        if (product.getQuantity() < 5) {
+        if (product.getQuantity() < 30) {
             // Using a placeholder recipient email. In a real app, this could be from config
             // or user profile.
             emailService.sendLowStockAlert(product.getName(), product.getQuantity(), "admin@example.com");

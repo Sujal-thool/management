@@ -23,7 +23,7 @@ public class DashboardServiceImpl implements DashboardService {
         
         long totalProducts = allProducts.size();
         
-        long lowStockCount = productRepository.findByQuantityLessThan(5).size();
+        long lowStockCount = productRepository.findByQuantityLessThan(30).size();
         
         double totalStockValue = allProducts.stream()
                 .mapToDouble(p -> p.getPrice() * p.getQuantity())
