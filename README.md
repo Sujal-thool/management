@@ -25,7 +25,7 @@ This system is built using **React (Frontend)** and **Spring Boot (Backend)** wi
 
 ### Database
 
-* MySQL / PostgreSQL
+* MySQL
 
 ---
 
