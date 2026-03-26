@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore sensitive configuration and initialization files
+src/main/java/com/inventory/management/config/DataInitializer.java
+src/main/resources/application.properties
