@@ -72,8 +72,8 @@ This system is built using **React (Frontend)** and **Spring Boot (Backend)** wi
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com//Sujal-thool/management.git
+cd https://github.com/Sujal-thool/management
 ```
 
 ### 2. Backend Setup (Spring Boot)
@@ -89,6 +89,7 @@ mvn spring-boot:run
 cd frontend
 npm install
 npm start
+npm run dev
 ```
 
 ---
