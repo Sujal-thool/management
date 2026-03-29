@@ -63,7 +63,7 @@ This system is built using **React (Frontend)** and **Spring Boot (Backend)** wi
 
 ## 📸 Screenshots
 
-(Add your project screenshots here)
+https://github.com/Sujal-thool/management/tree/main/inventory/public/screenshots
 
 ---
 
